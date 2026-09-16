@@ -488,23 +488,44 @@ function Process() {
 }
 
 function Work() {
+  const items = [
+    {
+      n: "01",
+      title: "Cliente 01",
+      note: "Projeto em andamento. O case completo entra quando puder ser publicado.",
+      status: "Em andamento",
+    },
+    {
+      n: "02",
+      title: "Cliente 02",
+      note: "Projeto em andamento. O case completo entra quando puder ser publicado.",
+      status: "Em andamento",
+    },
+    {
+      n: "03",
+      title: "Próximo projeto",
+      note: "Aberto para o próximo site ou sistema da RR Tech.",
+      status: "Disponível",
+    },
+  ];
+
   return (
     <section id="projetos" className="bg-ink text-paper">
       <div className="site-wrap py-20 md:py-28">
         <Reveal>
           <p className="kicker text-accent">05 — Projetos</p>
           <h2 className="display mt-4 max-w-[16ch] text-[clamp(2.1rem,5vw,4rem)]">
-            Os primeiros projetos entram aqui.
+            Dois clientes já estão com a RR Tech.
           </h2>
           <p className="mt-6 max-w-xl text-lg text-paper/70">
-            A vitrine ainda está vazia de propósito: a empresa está nascendo. Quando houver trabalho real publicado,
-            ele aparece aqui — sem cliente inventado, prêmio ou número.
+            Os nomes e os cases entram aqui quando puderem ser publicados. Até lá, o que vale é o trabalho em
+            curso — sem depoimento inventado.
           </p>
         </Reveal>
         <div className="tilt-grid mt-12 grid gap-4 md:grid-cols-3">
-          {["Site institucional", "Produto web", "Redesign"].map((label, i) => (
-            <Reveal key={label} delay={i * 80}>
-              <TiltCard href="#contato" label={label} index={i} />
+          {items.map((item, i) => (
+            <Reveal key={item.n} delay={i * 80}>
+              <TiltCard item={item} />
             </Reveal>
           ))}
         </div>
@@ -513,7 +534,11 @@ function Work() {
   );
 }
 
-function TiltCard({ href, label, index }: { href: string; label: string; index: number }) {
+function TiltCard({
+  item,
+}: {
+  item: { n: string; title: string; note: string; status: string };
+}) {
   const ref = useRef<HTMLAnchorElement>(null);
 
   function onMove(e: ReactPointerEvent<HTMLAnchorElement>) {
@@ -534,19 +559,17 @@ function TiltCard({ href, label, index }: { href: string; label: string; index: 
   return (
     <a
       ref={ref}
-      href={href}
+      href="#contato"
       className="cut-frame film-card group relative block min-h-[320px] overflow-hidden border border-paper/12 bg-ink-2 p-6 md:min-h-[380px]"
       onPointerMove={onMove}
       onPointerLeave={onLeave}
     >
-      <div className="film-card-inner relative z-[1] h-full">
-        <p className="font-display text-xs font-bold tracking-[0.2em] uppercase text-paper/45">
-          Slot {String(index + 1).padStart(2, "0")}
-        </p>
-        <p className="display mt-24 text-2xl md:mt-32 md:text-3xl">{label}</p>
-        <p className="mt-2 text-sm text-paper/50">Aguardando projeto real</p>
-        <p className="mt-8 inline-flex items-center gap-2 font-display text-xs font-bold tracking-[0.18em] uppercase text-accent">
-          Em breve
+      <div className="film-card-inner relative z-[1] flex h-full min-h-[280px] flex-col md:min-h-[340px]">
+        <p className="font-display text-xs font-bold tracking-[0.2em] uppercase text-paper/45">{item.n}</p>
+        <p className="display mt-20 text-2xl md:mt-28 md:text-3xl">{item.title}</p>
+        <p className="mt-2 max-w-[24ch] text-sm text-paper/55">{item.note}</p>
+        <p className="mt-auto inline-flex items-center gap-2 pt-8 font-display text-xs font-bold tracking-[0.18em] uppercase text-accent">
+          {item.status}
           <ArrowUpRight className="size-3.5" aria-hidden />
         </p>
       </div>
