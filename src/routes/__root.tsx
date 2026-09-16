@@ -5,7 +5,7 @@ import appCss from "../styles.css?url";
 
 const APP_NAME = "RR Tech — Sites & Sistemas";
 const DESCRIPTION =
-  "Estúdio digital para sites profissionais e sistemas web sob medida. Visual, uso, performance e execução técnica.";
+  "RR Tech cria sites profissionais e sistemas web sob medida — visual, uso e execução técnica no mesmo corte.";
 
 export const Route = createRootRoute({
   head: () => ({

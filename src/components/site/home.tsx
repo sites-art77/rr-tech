@@ -235,7 +235,8 @@ function Hero({ live, play }: { live: boolean; play: boolean }) {
             </span>
           </h1>
           <p className="hero-lede mt-7 max-w-[36rem] text-[1.125rem] leading-relaxed text-paper/88 md:text-xl">
-            Criamos sites e sistemas sob medida que unem estratégia, design e tecnologia.
+            A RR Tech cria sites profissionais e sistemas web sob medida — estratégia, design e tecnologia no mesmo
+            projeto.
           </p>
           <div className="hero-actions mt-9 flex flex-wrap items-center gap-3">
             <Magnetic>
@@ -245,8 +246,8 @@ function Hero({ live, play }: { live: boolean; play: boolean }) {
               </a>
             </Magnetic>
             <Magnetic strength={0.18}>
-              <a href="#projetos" className="btn-diag btn-diag-ghost">
-                Ver projetos
+              <a href="#capacidade" className="btn-diag btn-diag-ghost">
+                O que fazemos
               </a>
             </Magnetic>
           </div>
@@ -307,11 +308,11 @@ function Approach() {
         <Reveal>
           <p className="kicker text-accent">02 — Estúdio</p>
           <h2 className="display mt-4 max-w-[18ch] text-[clamp(2.1rem,5vw,4rem)]">
-            Estratégia, desenho e engenharia no mesmo corte.
+            Uma empresa de sites e sistemas, com corte próprio.
           </h2>
           <p className="mt-6 max-w-2xl text-lg text-ink/75">
-            Não separamos “bonito” de “funciona”. O recorte azul da marca é o mesmo gesto do estúdio: direção,
-            precisão e avanço — cada decisão com um motivo.
+            A RR Tech está sendo construída para isso: presença digital clara e sistemas que aguentam o dia a dia.
+            Não separamos “bonito” de “funciona”. Cada decisão tem um motivo.
           </p>
         </Reveal>
         <div className="mt-14 grid gap-px bg-ink/12 md:grid-cols-3">
@@ -493,11 +494,11 @@ function Work() {
         <Reveal>
           <p className="kicker text-accent">05 — Projetos</p>
           <h2 className="display mt-4 max-w-[16ch] text-[clamp(2.1rem,5vw,4rem)]">
-            O trabalho entra aqui. Sem cases inventados.
+            Os primeiros projetos entram aqui.
           </h2>
           <p className="mt-6 max-w-xl text-lg text-paper/70">
-            Esta vitrine está pronta para projetos reais da RR Tech. Enquanto o portfólio não é publicado,
-            não encenamos clientes, prêmios ou números.
+            A vitrine ainda está vazia de propósito: a empresa está nascendo. Quando houver trabalho real publicado,
+            ele aparece aqui — sem cliente inventado, prêmio ou número.
           </p>
         </Reveal>
         <div className="tilt-grid mt-12 grid gap-4 md:grid-cols-3">
@@ -586,8 +587,8 @@ function Contact() {
           <p className="kicker text-accent">06 — Contato</p>
           <h2 className="display mt-4 text-[clamp(2.2rem,5vw,4.4rem)]">Vamos falar do seu projeto.</h2>
           <p className="mt-6 text-lg text-paper/72">
-            Canal oficial de e-mail ou WhatsApp ainda não foi publicado aqui. Descreva o que você precisa —
-            geramos um briefing para copiar e enviar pelo meio que vocês já usam.
+            Se você precisa de um site ou de um sistema, este é o começo. Canal oficial de e-mail ou WhatsApp ainda
+            não foi publicado aqui — descreva o que precisa e geramos um briefing para copiar e enviar.
           </p>
         </Reveal>
         <Reveal delay={80} className="md:col-span-6 md:col-start-7">
@@ -643,7 +644,7 @@ function Footer() {
         <div>
           <Logo variant="lockup-dark" />
           <p className="mt-4 max-w-sm text-sm text-paper/55">
-            RR Tech — Sites & Sistemas. Identidade aplicada com precisão.
+            RR Tech — empresa de sites profissionais e sistemas web sob medida.
           </p>
         </div>
         <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Rodapé">
