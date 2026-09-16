@@ -23,27 +23,19 @@ export function Logo({
       <img
         src={src[variant]}
         alt="RR Tech — Sites & Sistemas"
-        className={cn("h-8 w-auto md:h-9", className)}
-        width={220}
-        height={48}
+        className={cn("h-9 w-auto md:h-11", className)}
+        width={248}
+        height={54}
       />
     );
   }
 
   return (
     <span className={cn("inline-flex items-center gap-3", className)}>
-      <img
-        src={src[variant]}
-        alt=""
-        className="h-8 w-auto md:h-10"
-        width={134}
-        height={80}
-      />
+      <img src={src[variant]} alt="" className="h-8 w-auto md:h-10" width={134} height={80} />
       {wordmark ? (
         <span className="leading-none">
-          <span className="display block text-[1.05rem] tracking-tight md:text-[1.2rem]">
-            RR TECH
-          </span>
+          <span className="display block text-[1.05rem] tracking-tight md:text-[1.2rem]">RR TECH</span>
           <span className="mt-1 block text-[0.58rem] font-medium tracking-[0.28em] uppercase opacity-70">
             Sites & Sistemas
           </span>

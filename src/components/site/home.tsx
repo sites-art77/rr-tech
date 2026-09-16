@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useId, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { ArrowUpRight, Check, Copy } from "lucide-react";
 import { Logo } from "@/components/rr/logo";
 import { Reveal } from "@/components/rr/reveal";
+import { ScrollRig, getLenis } from "@/components/rr/scroll-rig";
+import { Cursor } from "@/components/rr/cursor";
+import { Magnetic } from "@/components/rr/magnetic";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { href: "#estudio", label: "Estúdio" },
   { href: "#capacidade", label: "Sites & sistemas" },
   { href: "#servicos", label: "Serviços" },
   { href: "#processo", label: "Processo" },
@@ -54,16 +56,20 @@ const STEPS = [
 export function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [intro, setIntro] = useState(true);
+  const [introDone, setIntroDone] = useState(false);
+  const [active, setActive] = useState("#topo");
+  const [play, setPlay] = useState(false);
 
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      setIntro(false);
-      return;
-    }
-    const t = window.setTimeout(() => setIntro(false), 1480);
-    return () => window.clearTimeout(t);
+    document.documentElement.dataset.motion = "on";
+    const raf = requestAnimationFrame(() => {
+      requestAnimationFrame(() => setPlay(true));
+    });
+    const t = window.setTimeout(() => setIntroDone(true), 1700);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(t);
+    };
   }, []);
 
   useEffect(() => {
@@ -74,7 +80,28 @@ export function Home() {
   }, []);
 
   useEffect(() => {
+    const ids = ["topo", "capacidade", "servicos", "processo", "projetos", "contato"];
+    const io = new IntersectionObserver(
+      (entries) => {
+        const vis = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (vis?.target.id) setActive(`#${vis.target.id}`);
+      },
+      { rootMargin: "-35% 0px -45% 0px", threshold: [0.1, 0.35, 0.6] },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    const lenis = getLenis();
+    if (menuOpen) lenis?.stop();
+    else lenis?.start();
     return () => {
       document.body.style.overflow = "";
     };
@@ -82,18 +109,9 @@ export function Home() {
 
   return (
     <>
-      {intro ? (
-        <div id="intro-veil" className="is-playing" aria-hidden="true">
-          <div className="bars">
-            <span className="bar" />
-            <span className="bar" />
-            <span className="bar" />
-            <span className="bar" />
-          </div>
-          <img className="mark" src="/brand/rr-mark-on-dark-sm.png" alt="" width={220} height={131} />
-        </div>
-      ) : null}
-
+      <ScrollRig />
+      <Cursor />
+      <div className="film-grain" aria-hidden />
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-90 focus:bg-accent focus:px-3 focus:py-2 focus:text-paper"
@@ -103,23 +121,29 @@ export function Home() {
 
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-40 transition-colors duration-300",
-          scrolled || menuOpen ? "bg-ink/92 backdrop-blur-md" : "bg-transparent",
+          "site-header fixed inset-x-0 top-0 z-40",
+          scrolled || menuOpen ? "is-solid" : "",
+          introDone ? "is-ready" : "",
         )}
       >
-        <div className="site-wrap flex h-16 items-center justify-between md:h-[4.5rem]">
+        <div className="site-wrap flex h-[4.75rem] items-center justify-between gap-8 md:h-20">
           <a href="#topo" className="shrink-0" aria-label="RR Tech, início">
             <Logo variant="lockup-dark" />
           </a>
-          <nav className="hidden items-center gap-7 lg:flex" aria-label="Seções">
+          <nav className="hidden items-center gap-8 xl:gap-11 lg:flex" aria-label="Seções">
             {NAV.map((item) => (
-              <a key={item.href} href={item.href} className="nav-link text-paper/80 hover:text-paper">
+              <a
+                key={item.href}
+                href={item.href}
+                className="nav-link text-paper/75 hover:text-paper"
+                aria-current={active === item.href ? "true" : undefined}
+              >
                 {item.label}
               </a>
             ))}
           </nav>
-          <div className="flex items-center gap-3">
-            <a href="#contato" className="btn-diag btn-diag-solid hidden sm:inline-flex">
+          <div className="flex items-center gap-4">
+            <a href="#contato" className="btn-diag btn-diag-solid btn-cut hidden lg:inline-flex">
               Começar um projeto
             </a>
             <button
@@ -140,18 +164,18 @@ export function Home() {
         </div>
         {menuOpen ? (
           <div id="mobile-nav" className="border-t border-paper/10 bg-ink lg:hidden">
-            <nav className="site-wrap flex flex-col gap-1 py-4" aria-label="Menu móvel">
+            <nav className="site-wrap flex flex-col gap-1 py-5" aria-label="Menu móvel">
               {NAV.map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="py-3 font-display text-sm font-bold tracking-[0.16em] uppercase"
+                  className="py-3 font-display text-sm font-bold tracking-[0.18em] uppercase"
                   onClick={() => setMenuOpen(false)}
                 >
                   {item.label}
                 </a>
               ))}
-              <a href="#contato" className="btn-diag btn-diag-solid mt-2" onClick={() => setMenuOpen(false)}>
+              <a href="#contato" className="btn-diag btn-diag-solid btn-cut mt-3" onClick={() => setMenuOpen(false)}>
                 Começar um projeto
               </a>
             </nav>
@@ -160,9 +184,11 @@ export function Home() {
       </header>
 
       <main id="conteudo">
-        <Hero />
+        <Hero live={introDone} play={play} />
         <Capabilities />
         <Approach />
+        <ScaleBand />
+        <Ticker />
         <Services />
         <Process />
         <Work />
@@ -173,53 +199,64 @@ export function Home() {
   );
 }
 
-function Hero() {
+function Hero({ live, play }: { live: boolean; play: boolean }) {
   return (
     <section
       id="topo"
-      className="tech-grid relative min-h-[100svh] overflow-hidden bg-ink pt-24 text-paper md:pt-28"
+      className={cn(
+        "hero relative min-h-[100svh] overflow-hidden bg-ink pt-24 text-paper md:pt-28",
+        live && "is-live",
+        play && "hero-play",
+      )}
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-[12%] top-[18%] h-[70%] w-[48%] bg-accent/90"
-        style={{ clipPath: "polygon(38% 0, 100% 0, 62% 100%, 0 100%)", opacity: 0.16 }}
-      />
-      <div className="site-wrap relative grid min-h-[calc(100svh-6rem)] items-end gap-12 pb-12 md:grid-cols-12 md:pb-16">
-        <div className="md:col-span-7">
-          <p className="kicker text-accent">Estúdio digital</p>
-          <h1 className="display mt-6 max-w-[11ch] text-[clamp(3rem,9vw,7.2rem)]">
-            Sites que marcam.
-            <span className="mt-1 block">Sistemas que resolvem.</span>
-          </h1>
-          <p className="mt-8 max-w-md text-lg text-paper/78">
-            Experiências digitais construídas para transformar ideias em produtos rápidos, funcionais e
-            memoráveis — com a identidade da RR Tech no desenho, não só no logo.
+      <div className="hero-grid" aria-hidden />
+      <p className="hero-ghost" aria-hidden>
+        MARCAM
+      </p>
+      <div className="hero-field-track" aria-hidden>
+        <span className="hero-bar hero-bar-1" />
+        <span className="hero-bar hero-bar-2" />
+        <span className="hero-bar hero-bar-3" />
+      </div>
+
+      <div className="hero-copy-track site-wrap relative z-10 grid min-h-[calc(100svh-6rem)] items-center pb-16 md:pb-24">
+        <div className="hero-copy">
+          <p className="hero-kicker kicker">
+            <span className="text-accent">01</span>
+            <span className="mx-3 inline-block h-px w-8 bg-accent align-middle" />
+            Sites & sistemas
           </p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <a href="#contato" className="btn-diag btn-diag-solid">
-              Começar um projeto
-              <ArrowUpRight className="size-4" aria-hidden />
-            </a>
-            <a href="#capacidade" className="btn-diag btn-diag-ghost">
-              Conhecer o trabalho
-            </a>
-          </div>
-        </div>
-        <div className="relative md:col-span-5 md:self-center">
-          <div className="cut-frame border border-paper/12 bg-ink-2/40 p-8 md:p-10">
-            <img
-              src="/brand/rr-mark-on-dark-sm.png"
-              alt="Monograma RR"
-              className="mx-auto w-full max-w-[320px]"
-              width={420}
-              height={250}
-            />
-            <p className="mt-8 border-t border-paper/12 pt-5 font-display text-xs font-bold tracking-[0.22em] uppercase text-paper/55">
-              RR Tech · Sites & Sistemas
-            </p>
+          <h1 className="hero-title display mt-6">
+            <span className="hero-line">
+              <span>Sites que marcam.</span>
+            </span>
+            <span className="hero-line">
+              <span>Sistemas que resolvem.</span>
+            </span>
+          </h1>
+          <p className="hero-lede mt-7 max-w-[36rem] text-[1.125rem] leading-relaxed text-paper/88 md:text-xl">
+            Criamos sites e sistemas sob medida que unem estratégia, design e tecnologia.
+          </p>
+          <div className="hero-actions mt-9 flex flex-wrap items-center gap-3">
+            <Magnetic>
+              <a href="#contato" className="btn-diag btn-diag-solid btn-cut">
+                Começar um projeto
+                <ArrowUpRight className="size-4" aria-hidden />
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.18}>
+              <a href="#projetos" className="btn-diag btn-diag-ghost">
+                Ver projetos
+              </a>
+            </Magnetic>
           </div>
         </div>
       </div>
+      <a href="#capacidade" className="scroll-cue">
+        <span>Rolar</span>
+        <span className="scroll-cue-line" aria-hidden />
+      </a>
+      <div className="hero-cut" aria-hidden />
     </section>
   );
 }
@@ -234,24 +271,30 @@ function Capabilities() {
             Dois ofícios, um estúdio.
           </h2>
         </Reveal>
-        <div className="mt-14 grid md:grid-cols-2">
-          <Reveal className="border-t border-ink/12 py-10 pr-0 md:border-r md:pr-12">
-            <p className="font-display text-sm font-bold tracking-[0.2em] uppercase text-accent">Sites</p>
-            <h3 className="display mt-3 text-3xl md:text-4xl">A face do negócio</h3>
-            <p className="mt-5 max-w-md text-ink/75">
-              Páginas com voz própria: composição, tipografia e movimento a serviço da leitura. Um site da RR
-              Tech deve parecer desta empresa — não de qualquer agência.
-            </p>
-          </Reveal>
-          <Reveal delay={90} className="border-t border-ink/12 py-10 md:pl-12">
-            <p className="font-display text-sm font-bold tracking-[0.2em] uppercase text-accent">Sistemas</p>
-            <h3 className="display mt-3 text-3xl md:text-4xl">A operação no ar</h3>
-            <p className="mt-5 max-w-md text-ink/75">
-              Interfaces e fluxos para o dia a dia: clareza, estados honestos e engenharia que aguenta uso real.
-              O sistema resolve; a interface não atrapalha.
-            </p>
-          </Reveal>
-        </div>
+      </div>
+      <div className="craft-split">
+        <Reveal className="craft-panel">
+          <span className="craft-bg" aria-hidden>
+            SITES
+          </span>
+          <p className="font-display text-sm font-bold tracking-[0.2em] uppercase text-accent">01 — Sites</p>
+          <h3 className="display mt-4 text-3xl md:text-5xl">A face do negócio</h3>
+          <p className="mt-5 max-w-md text-lg text-ink/75">
+            Páginas com voz própria: composição, tipografia e movimento a serviço da leitura. Um site da RR Tech
+            deve parecer desta empresa — não de qualquer agência.
+          </p>
+        </Reveal>
+        <Reveal delay={90} className="craft-panel">
+          <span className="craft-bg" aria-hidden>
+            SISTEMAS
+          </span>
+          <p className="font-display text-sm font-bold tracking-[0.2em] uppercase text-accent">02 — Sistemas</p>
+          <h3 className="display mt-4 text-3xl md:text-5xl">A operação no ar</h3>
+          <p className="mt-5 max-w-md text-lg text-ink/75">
+            Interfaces e fluxos para o dia a dia: clareza, estados honestos e engenharia que aguenta uso real. O
+            sistema resolve; a interface não atrapalha.
+          </p>
+        </Reveal>
       </div>
     </section>
   );
@@ -286,7 +329,7 @@ function Approach() {
               d: "Front-end cuidadoso: responsivo, teclado, performance e movimento que pertence ao projeto.",
             },
           ].map((item, i) => (
-            <Reveal key={item.t} delay={i * 80} className="bg-paper-2 p-8 md:p-10">
+            <Reveal key={item.t} delay={i * 80} className="studio-card bg-paper-2 p-8 md:p-10">
               <span className="font-display text-xs font-bold tracking-[0.22em] text-accent">0{i + 1}</span>
               <h3 className="display mt-4 text-2xl">{item.t}</h3>
               <p className="mt-3 text-ink/70">{item.d}</p>
@@ -298,6 +341,23 @@ function Approach() {
   );
 }
 
+function Ticker() {
+  const items = ["Sites institucionais", "Landing pages", "Interfaces digitais", "Sistemas web", "Redesign"];
+  const loop = [...items, ...items];
+  return (
+    <div className="ticker" aria-hidden>
+      <div className="ticker-track">
+        {loop.map((item, i) => (
+          <span key={`${item}-${i}`} className="ticker-item">
+            {item}
+            <span className="ticker-slash" />
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Services() {
   return (
     <section id="servicos" className="bg-ink text-paper">
@@ -306,15 +366,16 @@ function Services() {
           <p className="kicker text-accent">03 — Serviços</p>
           <h2 className="display mt-4 max-w-[14ch] text-[clamp(2.1rem,5vw,4rem)]">O que construímos</h2>
         </Reveal>
-        <ul className="mt-12 divide-y divide-paper/12 border-y border-paper/12">
+        <ul className="mt-12 border-y border-paper/12">
           {SERVICES.map((s, i) => (
             <li key={s.n}>
               <Reveal delay={i * 40}>
-                <article className="group grid gap-3 py-8 md:grid-cols-[5rem_1fr_1.2fr] md:items-baseline md:gap-8">
+                <a href="#contato" className="svc-row group grid gap-3 py-8 md:grid-cols-[5rem_1fr_auto_1.15fr] md:items-center md:gap-8">
                   <span className="font-display text-sm font-bold tracking-[0.18em] text-accent">{s.n}</span>
-                  <h3 className="display text-2xl md:text-[1.7rem]">{s.title}</h3>
-                  <p className="text-paper/70 md:text-right">{s.text}</p>
-                </article>
+                  <h3 className="display text-2xl md:text-[1.85rem]">{s.title}</h3>
+                  <ArrowUpRight className="svc-arrow hidden size-5 text-accent md:block" aria-hidden />
+                  <p className="text-paper/80 md:text-right">{s.text}</p>
+                </a>
               </Reveal>
             </li>
           ))}
@@ -324,25 +385,102 @@ function Services() {
   );
 }
 
-function Process() {
+function ScaleBand() {
+  const pin = useRef<HTMLElement>(null);
+  const word = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const el = pin.current;
+    const w = word.current;
+    if (!el || !w) return;
+
+    const update = () => {
+      const rect = el.getBoundingClientRect();
+      const total = Math.max(el.offsetHeight - window.innerHeight, 1);
+      const p = Math.min(Math.max(-rect.top / total, 0), 1);
+      const scale = 1.28 - p * 0.38;
+      const opacity = 0.55 + p * 0.45;
+      w.style.transform = `translate3d(calc(var(--mx) * 20px), 0, 0) scale(${scale})`;
+      w.style.opacity = String(opacity);
+    };
+
+    const lenis = getLenis();
+    lenis?.on("scroll", update);
+    window.addEventListener("scroll", update, { passive: true });
+    update();
+    return () => {
+      lenis?.off("scroll", update);
+      window.removeEventListener("scroll", update);
+    };
+  }, []);
+
   return (
-    <section id="processo" className="bg-paper text-ink">
-      <div className="site-wrap py-20 md:py-28">
-        <Reveal>
-          <p className="kicker text-accent">04 — Processo</p>
-          <h2 className="display mt-4 text-[clamp(2.1rem,5vw,4rem)]">Do briefing ao ar</h2>
-        </Reveal>
-        <ol className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-          {STEPS.map((s, i) => (
-            <Reveal key={s.n} delay={i * 70}>
-              <li className="relative border-t-2 border-accent pt-5">
-                <span className="font-display text-xs font-bold tracking-[0.2em] text-mist">{s.n}</span>
-                <h3 className="display mt-2 text-2xl">{s.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink/70">{s.text}</p>
-              </li>
-            </Reveal>
+    <section ref={pin} className="scale-pin bg-ink text-paper" aria-label="Sites e sistemas">
+      <div className="scale-sticky">
+        <p className="kicker text-accent">RR Tech</p>
+        <p ref={word} className="scale-word display">
+          SITES & SISTEMAS
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function Process() {
+  const pin = useRef<HTMLElement>(null);
+  const track = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = pin.current;
+    const tr = track.current;
+    if (!el || !tr) return;
+
+    const update = () => {
+      if (window.innerWidth < 1024) {
+        tr.style.transform = "none";
+        return;
+      }
+      const rect = el.getBoundingClientRect();
+      const total = Math.max(el.offsetHeight - window.innerHeight, 1);
+      const p = Math.min(Math.max(-rect.top / total, 0), 1);
+      const max = Math.max(tr.scrollWidth - window.innerWidth, 0);
+      tr.style.transform = `translate3d(${-p * max}px, 0, 0)`;
+    };
+
+    const lenis = getLenis();
+    lenis?.on("scroll", update);
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+    return () => {
+      lenis?.off("scroll", update);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  return (
+    <section id="processo" ref={pin} className="process-pin bg-paper text-ink">
+      <div className="process-sticky">
+        <div ref={track} className="process-track">
+          <div className="process-panel process-intro">
+            <p className="kicker text-accent">04 — Processo</p>
+            <h2 className="display mt-6 text-[clamp(2.6rem,6vw,5.5rem)]">Do briefing ao ar</h2>
+            <p className="mt-6 max-w-sm text-lg text-ink/70">
+              Um percurso curto e controlado — cada etapa com função, sem teatro de metodologia.
+            </p>
+          </div>
+          {STEPS.map((s) => (
+            <div key={s.n} className="process-panel">
+              <span className="process-num display" aria-hidden>
+                {s.n}
+              </span>
+              <p className="font-display text-xs font-bold tracking-[0.22em] text-accent">{s.n}</p>
+              <h3 className="display mt-4 text-[clamp(2.2rem,4vw,4rem)]">{s.title}</h3>
+              <p className="mt-5 max-w-sm text-lg text-ink/70">{s.text}</p>
+            </div>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   );
@@ -362,26 +500,56 @@ function Work() {
             não encenamos clientes, prêmios ou números.
           </p>
         </Reveal>
-        <div className="mt-12 grid gap-4 md:grid-cols-3">
+        <div className="tilt-grid mt-12 grid gap-4 md:grid-cols-3">
           {["Site institucional", "Produto web", "Redesign"].map((label, i) => (
             <Reveal key={label} delay={i * 80}>
-              <div className="cut-frame relative min-h-[240px] overflow-hidden border border-paper/12 bg-ink-2 p-6">
-                <div
-                  aria-hidden
-                  className="absolute inset-y-0 right-6 w-10 bg-accent/20"
-                  style={{ transform: "skewX(-28deg)" }}
-                />
-                <p className="font-display text-xs font-bold tracking-[0.2em] uppercase text-paper/45">
-                  Slot {String(i + 1).padStart(2, "0")}
-                </p>
-                <p className="display mt-16 text-2xl">{label}</p>
-                <p className="mt-2 text-sm text-paper/50">Aguardando projeto real</p>
-              </div>
+              <TiltCard href="#contato" label={label} index={i} />
             </Reveal>
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function TiltCard({ href, label, index }: { href: string; label: string; index: number }) {
+  const ref = useRef<HTMLAnchorElement>(null);
+
+  function onMove(e: ReactPointerEvent<HTMLAnchorElement>) {
+    const el = ref.current;
+    if (!el || window.matchMedia("(pointer: coarse)").matches) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    el.style.transform = `rotateX(${-py * 8}deg) rotateY(${px * 10}deg) translateZ(0)`;
+  }
+
+  function onLeave() {
+    const el = ref.current;
+    if (!el) return;
+    el.style.transform = "rotateX(0) rotateY(0)";
+  }
+
+  return (
+    <a
+      ref={ref}
+      href={href}
+      className="cut-frame film-card group relative block min-h-[320px] overflow-hidden border border-paper/12 bg-ink-2 p-6 md:min-h-[380px]"
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+    >
+      <div className="film-card-inner relative z-[1] h-full">
+        <p className="font-display text-xs font-bold tracking-[0.2em] uppercase text-paper/45">
+          Slot {String(index + 1).padStart(2, "0")}
+        </p>
+        <p className="display mt-24 text-2xl md:mt-32 md:text-3xl">{label}</p>
+        <p className="mt-2 text-sm text-paper/50">Aguardando projeto real</p>
+        <p className="mt-8 inline-flex items-center gap-2 font-display text-xs font-bold tracking-[0.18em] uppercase text-accent">
+          Em breve
+          <ArrowUpRight className="size-3.5" aria-hidden />
+        </p>
+      </div>
+    </a>
   );
 }
 
@@ -401,13 +569,7 @@ function Contact() {
       return;
     }
     setError("");
-    const brief = [
-      "Briefing RR Tech",
-      `Nome: ${nome}`,
-      tipo ? `Tipo: ${tipo}` : "",
-      "",
-      mensagem,
-    ]
+    const brief = ["Briefing RR Tech", `Nome: ${nome}`, tipo ? `Tipo: ${tipo}` : "", "", mensagem]
       .filter(Boolean)
       .join("\n");
     void navigator.clipboard.writeText(brief).then(() => {
@@ -418,11 +580,7 @@ function Contact() {
 
   return (
     <section id="contato" className="relative overflow-hidden bg-ink text-paper">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute bottom-0 left-0 h-full w-[42%] bg-accent"
-        style={{ clipPath: "polygon(0 0, 42% 0, 18% 100%, 0 100%)", opacity: 0.18 }}
-      />
+      <div aria-hidden className="contact-plane pointer-events-none absolute bottom-0 left-0 h-full w-[42%] bg-accent" />
       <div className="site-wrap relative grid gap-12 py-20 md:grid-cols-12 md:py-28">
         <Reveal className="md:col-span-5">
           <p className="kicker text-accent">06 — Contato</p>
@@ -433,7 +591,7 @@ function Contact() {
           </p>
         </Reveal>
         <Reveal delay={80} className="md:col-span-6 md:col-start-7">
-          <form onSubmit={onSubmit} className="grid gap-4" noValidate>
+          <form onSubmit={onSubmit} className="cut-frame form-panel grid gap-4 p-6 md:p-8" noValidate>
             <label className="grid gap-2 text-sm" htmlFor={`${id}-nome`}>
               Nome
               <input id={`${id}-nome`} name="nome" className="field" autoComplete="name" required />
@@ -458,7 +616,7 @@ function Contact() {
                 {error}
               </p>
             ) : null}
-            <button type="submit" className="btn-diag btn-diag-solid justify-self-start">
+            <button type="submit" className="btn-diag btn-diag-solid btn-cut justify-self-start">
               {copied ? (
                 <>
                   Briefing copiado
@@ -481,16 +639,21 @@ function Contact() {
 function Footer() {
   return (
     <footer className="border-t border-paper/10 bg-ink text-paper">
-      <div className="site-wrap flex flex-col gap-8 py-10 md:flex-row md:items-end md:justify-between">
+      <div className="site-wrap flex flex-col gap-10 py-12 md:flex-row md:items-end md:justify-between">
         <div>
           <Logo variant="lockup-dark" />
           <p className="mt-4 max-w-sm text-sm text-paper/55">
             RR Tech — Sites & Sistemas. Identidade aplicada com precisão.
           </p>
         </div>
-        <p className="text-xs tracking-[0.18em] uppercase text-paper/40">
-          © {new Date().getFullYear()} RR Tech
-        </p>
+        <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Rodapé">
+          {NAV.map((item) => (
+            <a key={item.href} href={item.href} className="nav-link text-paper/55 hover:text-paper">
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <p className="text-xs tracking-[0.18em] uppercase text-paper/40">© {new Date().getFullYear()} RR Tech</p>
       </div>
     </footer>
   );
