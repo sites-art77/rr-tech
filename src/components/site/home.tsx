@@ -186,8 +186,6 @@ export function Home() {
       <main id="conteudo">
         <Hero live={introDone} play={play} />
         <Capabilities />
-        <Approach />
-        <Ticker />
         <Services />
         <Process />
         <Work />
@@ -297,75 +295,12 @@ function Capabilities() {
   );
 }
 
-function Approach() {
-  return (
-    <section id="estudio" className="bg-paper-2 text-ink">
-      <div className="site-wrap py-20 md:py-28">
-        <Reveal>
-          <p className="kicker text-accent">02 — Estúdio</p>
-          <h2 className="display mt-4 max-w-[18ch] text-[clamp(2.1rem,5vw,4rem)]">
-            Uma empresa de sites e sistemas, com corte próprio.
-          </h2>
-          <p className="mt-6 max-w-2xl text-lg text-ink/75">
-            A RR Tech está sendo construída para isso: presença digital clara e sistemas que aguentam o dia a dia.
-            Não separamos “bonito” de “funciona”. Cada decisão tem um motivo.
-          </p>
-        </Reveal>
-        <ol className="mt-16">
-          {[
-            {
-              n: "01",
-              t: "Direção",
-              d: "Antes da tela, o problema. Público, oferta e o que precisa acontecer quando a pessoa chega.",
-            },
-            {
-              t: "Forma",
-              n: "02",
-              d: "Identidade aplicada de verdade: geometria, tipo, ritmo e estados. Sem estética genérica de tecnologia.",
-            },
-            {
-              n: "03",
-              t: "Construção",
-              d: "Front-end cuidadoso: responsivo, teclado, performance e movimento que pertence ao projeto.",
-            },
-          ].map((item, i) => (
-            <Reveal key={item.t} delay={i * 70}>
-              <li className="manifest-row">
-                <span className="manifest-n display">{item.n}</span>
-                <h3 className="display text-[clamp(1.8rem,3vw,2.6rem)]">{item.t}</h3>
-                <p className="max-w-md text-ink/70">{item.d}</p>
-              </li>
-            </Reveal>
-          ))}
-        </ol>
-      </div>
-    </section>
-  );
-}
-
-function Ticker() {
-  const items = ["Sites institucionais", "Landing pages", "Interfaces digitais", "Sistemas web", "Redesign"];
-  const loop = [...items, ...items];
-  return (
-    <div className="ticker" aria-hidden>
-      <div className="ticker-track">
-        {loop.map((item, i) => (
-          <span key={`${item}-${i}`} className="ticker-item">
-            {item}
-            <span className="ticker-slash" />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function Services() {
   return (
     <section id="servicos" className="bg-ink text-paper">
       <div className="site-wrap py-20 md:py-28">
         <Reveal>
-          <p className="kicker text-accent">03 — Serviços</p>
+          <p className="kicker text-accent">02 — Serviços</p>
           <h2 className="display mt-4 max-w-[14ch] text-[clamp(2.1rem,5vw,4rem)]">O que construímos</h2>
         </Reveal>
         <ul className="mt-12 border-y border-paper/12">
@@ -425,7 +360,7 @@ function Process() {
       <div className="process-sticky">
         <div ref={track} className="process-track">
           <div className="process-panel process-intro">
-            <p className="kicker">04 — Processo</p>
+            <p className="kicker">03 — Processo</p>
             <h2 className="display mt-6 text-[clamp(2.6rem,6vw,5.5rem)]">Do briefing ao ar</h2>
             <p className="mt-6 max-w-sm text-lg text-paper/80">
               Um percurso curto e controlado — cada etapa com função, sem teatro de metodologia.
@@ -473,7 +408,7 @@ function Work() {
     <section id="projetos" className="bg-ink text-paper">
       <div className="site-wrap py-20 md:py-28">
         <Reveal>
-          <p className="kicker text-accent">05 — Projetos</p>
+          <p className="kicker text-accent">04 — Projetos</p>
           <h2 className="display mt-4 max-w-[16ch] text-[clamp(2.1rem,5vw,4rem)]">
             Dois clientes já estão com a RR Tech.
           </h2>
@@ -570,7 +505,7 @@ function Contact() {
       <div aria-hidden className="contact-plane pointer-events-none absolute bottom-0 left-0 h-full w-[42%] bg-accent" />
       <div className="site-wrap relative grid gap-12 py-20 md:grid-cols-12 md:py-28">
         <Reveal className="md:col-span-5">
-          <p className="kicker text-accent">06 — Contato</p>
+          <p className="kicker text-accent">05 — Contato</p>
           <h2 className="display mt-4 text-[clamp(2.2rem,5vw,4.4rem)]">Vamos falar do seu projeto.</h2>
           <p className="mt-6 text-lg text-paper/72">
             Se você precisa de um site ou de um sistema, este é o começo. Canal oficial de e-mail ou WhatsApp ainda
