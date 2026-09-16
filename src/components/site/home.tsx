@@ -187,7 +187,6 @@ export function Home() {
         <Hero live={introDone} play={play} />
         <Capabilities />
         <Approach />
-        <ScaleBand />
         <Ticker />
         <Services />
         <Process />
@@ -383,47 +382,6 @@ function Services() {
             </li>
           ))}
         </ul>
-      </div>
-    </section>
-  );
-}
-
-function ScaleBand() {
-  const pin = useRef<HTMLElement>(null);
-  const word = useRef<HTMLParagraphElement>(null);
-
-  useEffect(() => {
-    const el = pin.current;
-    const w = word.current;
-    if (!el || !w) return;
-
-    const update = () => {
-      const rect = el.getBoundingClientRect();
-      const total = Math.max(el.offsetHeight - window.innerHeight, 1);
-      const p = Math.min(Math.max(-rect.top / total, 0), 1);
-      const scale = 1.28 - p * 0.38;
-      const opacity = 0.55 + p * 0.45;
-      w.style.transform = `translate3d(calc(var(--mx) * 20px), 0, 0) scale(${scale})`;
-      w.style.opacity = String(opacity);
-    };
-
-    const lenis = getLenis();
-    lenis?.on("scroll", update);
-    window.addEventListener("scroll", update, { passive: true });
-    update();
-    return () => {
-      lenis?.off("scroll", update);
-      window.removeEventListener("scroll", update);
-    };
-  }, []);
-
-  return (
-    <section ref={pin} className="scale-pin bg-accent text-paper" aria-label="Sites e sistemas">
-      <div className="scale-sticky">
-        <p className="kicker text-paper/70">RR Tech</p>
-        <p ref={word} className="scale-word display">
-          SITES & SISTEMAS
-        </p>
       </div>
     </section>
   );

@@ -548,31 +548,6 @@ html[data-motion="on"] .site-header {
   transform: translate3d(calc(var(--mx) * -20px), 0, 0);
 }
 
-.scale-pin {
-  height: 165vh;
-  overflow: hidden;
-}
-
-.scale-sticky {
-  position: sticky;
-  top: 0;
-  display: grid;
-  height: 100svh;
-  place-items: center;
-  padding: 0 1.25rem;
-  overflow: hidden;
-}
-
-.scale-word {
-  margin: 0;
-  color: #fff;
-  font-size: clamp(2.2rem, 8vw, 8.5rem);
-  letter-spacing: -0.06em;
-  line-height: 0.9;
-  white-space: nowrap;
-  will-change: transform, opacity;
-}
-
 .process-pin {
   height: 320vh;
 }
@@ -691,16 +666,6 @@ html[data-motion="on"] .site-header {
   .process-num {
     font-size: 6.5rem;
     right: 0.6rem;
-  }
-
-  .scale-pin {
-    height: 120vh;
-  }
-
-  .scale-word {
-    font-size: clamp(2.1rem, 14vw, 4rem);
-    white-space: normal;
-    text-align: center;
   }
 
   .hero-ghost {
