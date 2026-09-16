@@ -3,15 +3,16 @@
 @theme {
   --font-display: "Syne", "Avenir Next", "Segoe UI", sans-serif;
   --font-sans: "Source Sans 3", "Source Sans Pro", "Segoe UI", sans-serif;
-  --color-ink: #0a0a0a;
-  --color-ink-2: #161616;
-  --color-paper: #f3f3f0;
-  --color-paper-2: #e6e6e1;
-  --color-mist: #8c8c86;
-  --color-line: #2a2a2a;
-  --color-line-light: #d4d4ce;
+  --color-ink: #07080c;
+  --color-ink-2: #101218;
+  --color-paper: #f3efe6;
+  --color-paper-2: #e7e1d4;
+  --color-mist: #8a8680;
+  --color-line: #1c1e26;
+  --color-line-light: #d4cec2;
   --color-accent: #0060f8;
-  --color-accent-deep: #0047c4;
+  --color-accent-deep: #0046d4;
+  --color-accent-ink: #04112e;
   --radius-sm: 2px;
   --radius-md: 4px;
 }
@@ -157,6 +158,7 @@
   .btn-diag-solid:hover,
   .btn-diag-solid:focus-visible {
     color: #fff;
+    background: var(--color-accent-deep);
   }
 
   .btn-diag-ghost {
@@ -287,8 +289,8 @@ html[data-motion="on"] .site-header {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, color-mix(in srgb, #2a2a2a 70%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, #2a2a2a 70%, transparent) 1px, transparent 1px);
+    linear-gradient(to right, color-mix(in srgb, #0060f8 16%, #1a1c24) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, #0060f8 16%, #1a1c24) 1px, transparent 1px);
   background-size: 72px 72px;
   -webkit-mask-image:
     linear-gradient(115deg, transparent 4%, #000 22%, #000 70%, transparent 96%),
@@ -563,6 +565,7 @@ html[data-motion="on"] .site-header {
 
 .scale-word {
   margin: 0;
+  color: #fff;
   font-size: clamp(2.2rem, 8vw, 8.5rem);
   letter-spacing: -0.06em;
   line-height: 0.9;
@@ -599,9 +602,46 @@ html[data-motion="on"] .site-header {
   border-right: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
 }
 
+.craft-panel-blue {
+  background: var(--color-accent);
+  color: var(--color-paper);
+  border-top-color: transparent;
+}
+
+.craft-panel-blue::after {
+  background: #fff;
+  opacity: 0.08;
+}
+
+.craft-panel-blue .craft-bg {
+  -webkit-text-stroke: 1px color-mix(in srgb, #fff 28%, transparent);
+}
+
+.ticker-blue {
+  background: var(--color-accent);
+  border-color: transparent;
+  color: #fff;
+}
+
+.ticker-blue .ticker-item {
+  color: color-mix(in srgb, #fff 88%, transparent);
+}
+
+.ticker-blue .ticker-slash {
+  background: #fff;
+  opacity: 0.9;
+}
+
 .process-intro {
   flex-basis: 48vw;
-  background: color-mix(in srgb, var(--color-accent) 6%, transparent);
+  background: var(--color-accent);
+  color: var(--color-paper);
+  border-right-color: transparent;
+}
+
+.process-intro .process-num,
+.process-intro .kicker {
+  color: #fff;
 }
 
 .process-panel > *:not(.process-num) {
@@ -684,9 +724,9 @@ html[data-motion="on"] .site-header {
 }
 
 .contact-plane {
-  clip-path: polygon(0 0, 42% 0, 18% 100%, 0 100%);
-  opacity: 0.18;
-  transform: translate3d(calc(var(--progress) * -6%), calc(var(--progress) * -40px), 0);
+  clip-path: polygon(0 0, 48% 0, 22% 100%, 0 100%);
+  opacity: 0.42;
+  transform: translate3d(calc(var(--progress) * -4%), calc(var(--progress) * -30px), 0);
   will-change: transform;
 }
 
@@ -705,7 +745,7 @@ html[data-motion="on"] .site-header {
   inset: 0;
   background: var(--color-accent);
   transform: translateX(-108%) skewX(-28deg);
-  opacity: 0.08;
+  opacity: 0.16;
   transition: transform 520ms cubic-bezier(0.16, 0.84, 0.32, 1);
   z-index: 0;
   pointer-events: none;
@@ -780,6 +820,24 @@ html[data-motion="on"] .site-header {
   pointer-events: none;
 }
 
+.film-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 0;
+  background: var(--color-accent);
+  transform: skewY(-12deg);
+  transition: height 480ms cubic-bezier(0.16, 0.84, 0.32, 1);
+  z-index: 2;
+}
+
+.film-card:hover::before,
+.film-card:focus-visible::before {
+  height: 100%;
+}
+
 .film-card:hover::after,
 .film-card:focus-visible::after {
   transform: translateX(0) skewX(-28deg);
@@ -801,8 +859,8 @@ html[data-motion="on"] .site-header {
     top: 0;
     bottom: 0;
     left: 50%;
-    width: 2px;
-    background: var(--color-accent);
+    width: 3px;
+    background: #fff;
     transform: skewX(-28deg);
     z-index: 2;
     pointer-events: none;

@@ -285,13 +285,13 @@ function Capabilities() {
             deve parecer desta empresa — não de qualquer agência.
           </p>
         </Reveal>
-        <Reveal delay={90} className="craft-panel">
+        <Reveal delay={90} className="craft-panel craft-panel-blue">
           <span className="craft-bg" aria-hidden>
             SISTEMAS
           </span>
-          <p className="font-display text-sm font-bold tracking-[0.2em] uppercase text-accent">02 — Sistemas</p>
+          <p className="font-display text-sm font-bold tracking-[0.2em] uppercase">02 — Sistemas</p>
           <h3 className="display mt-4 text-3xl md:text-5xl">A operação no ar</h3>
-          <p className="mt-5 max-w-md text-lg text-ink/75">
+          <p className="mt-5 max-w-md text-lg text-paper/82">
             Interfaces e fluxos para o dia a dia: clareza, estados honestos e engenharia que aguenta uso real. O
             sistema resolve; a interface não atrapalha.
           </p>
@@ -330,7 +330,7 @@ function Approach() {
               d: "Front-end cuidadoso: responsivo, teclado, performance e movimento que pertence ao projeto.",
             },
           ].map((item, i) => (
-            <Reveal key={item.t} delay={i * 80} className="studio-card bg-paper-2 p-8 md:p-10">
+            <Reveal key={item.t} delay={i * 80} className="studio-card bg-paper p-8 md:p-10">
               <span className="font-display text-xs font-bold tracking-[0.22em] text-accent">0{i + 1}</span>
               <h3 className="display mt-4 text-2xl">{item.t}</h3>
               <p className="mt-3 text-ink/70">{item.d}</p>
@@ -416,9 +416,9 @@ function ScaleBand() {
   }, []);
 
   return (
-    <section ref={pin} className="scale-pin bg-ink text-paper" aria-label="Sites e sistemas">
+    <section ref={pin} className="scale-pin bg-accent text-paper" aria-label="Sites e sistemas">
       <div className="scale-sticky">
-        <p className="kicker text-accent">RR Tech</p>
+        <p className="kicker text-paper/70">RR Tech</p>
         <p ref={word} className="scale-word display">
           SITES & SISTEMAS
         </p>
@@ -465,9 +465,9 @@ function Process() {
       <div className="process-sticky">
         <div ref={track} className="process-track">
           <div className="process-panel process-intro">
-            <p className="kicker text-accent">04 — Processo</p>
+            <p className="kicker">04 — Processo</p>
             <h2 className="display mt-6 text-[clamp(2.6rem,6vw,5.5rem)]">Do briefing ao ar</h2>
-            <p className="mt-6 max-w-sm text-lg text-ink/70">
+            <p className="mt-6 max-w-sm text-lg text-paper/80">
               Um percurso curto e controlado — cada etapa com função, sem teatro de metodologia.
             </p>
           </div>
