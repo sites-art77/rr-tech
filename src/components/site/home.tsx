@@ -1,19 +1,17 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type FormEvent, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useId, useState, type FormEvent } from "react";
 import { ArrowUpRight, Check, Copy } from "lucide-react";
 import { Logo } from "@/components/rr/logo";
 import { Reveal } from "@/components/rr/reveal";
 import { ScrollRig, getLenis } from "@/components/rr/scroll-rig";
-import { Cursor } from "@/components/rr/cursor";
-import { Magnetic } from "@/components/rr/magnetic";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { href: "#capacidade", label: "Sites & sistemas" },
+  { href: "#capacidade", label: "A empresa" },
   { href: "#servicos", label: "Serviços" },
-  { href: "#processo", label: "Processo" },
-  { href: "#projetos", label: "Projetos" },
+  { href: "#processo", label: "Como trabalhamos" },
+  { href: "#projetos", label: "Clientes" },
   { href: "#contato", label: "Contato" },
 ];
 
@@ -46,11 +44,11 @@ const SERVICES = [
 ];
 
 const STEPS = [
-  { n: "01", title: "Escutar", text: "Entender o negócio, o público e o que a página ou o sistema precisa resolver de verdade." },
-  { n: "02", title: "Desenhar", text: "Estrutura, visual e interação no mesmo sistema — tipografia, ritmo e estados, não só um hero." },
-  { n: "03", title: "Construir", text: "Implementação precisa: responsivo, acessível, rápido e alinhado à identidade." },
-  { n: "04", title: "Ajustar", text: "Revisão no ar: leitura, toque, movimento e os pontos onde o uso trava." },
-  { n: "05", title: "Lançar", text: "Entrega estável, pronta para crescer com conteúdo e projetos reais." },
+  { n: "01", title: "Briefing", text: "Conversa para entender o negócio, o prazo e o que o site ou o sistema precisa resolver." },
+  { n: "02", title: "Proposta", text: "Escopo, prazo e investimento — por escrito, antes de começar." },
+  { n: "03", title: "Design", text: "Estrutura e visual alinhados à sua marca. Você revisa antes da construção." },
+  { n: "04", title: "Desenvolvimento", text: "Implementação do site ou do sistema, testada em desktop e celular." },
+  { n: "05", title: "Entrega", text: "Publicação e o necessário para você operar o projeto no dia a dia." },
 ];
 
 export function Home() {
@@ -110,8 +108,6 @@ export function Home() {
   return (
     <>
       <ScrollRig />
-      <Cursor />
-      <div className="film-grain" aria-hidden />
       <a
         href="#conteudo"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-90 focus:bg-accent focus:px-3 focus:py-2 focus:text-paper"
@@ -144,7 +140,7 @@ export function Home() {
           </nav>
           <div className="flex items-center gap-4">
             <a href="#contato" className="btn-diag btn-diag-solid btn-cut hidden lg:inline-flex">
-              Começar um projeto
+              Solicitar proposta
             </a>
             <button
               type="button"
@@ -176,7 +172,7 @@ export function Home() {
                 </a>
               ))}
               <a href="#contato" className="btn-diag btn-diag-solid btn-cut mt-3" onClick={() => setMenuOpen(false)}>
-                Começar um projeto
+                Solicitar proposta
               </a>
             </nav>
           </div>
@@ -229,28 +225,19 @@ function Hero({ live, play }: { live: boolean; play: boolean }) {
             </span>
           </h1>
           <p className="hero-lede mt-7 max-w-[36rem] text-[1.125rem] leading-relaxed text-paper/88 md:text-xl">
-            A RR Tech cria sites profissionais e sistemas web sob medida — estratégia, design e tecnologia no mesmo
-            projeto.
+            Empresa de criação de sites profissionais e sistemas web sob medida. Dois clientes em andamento.
           </p>
           <div className="hero-actions mt-9 flex flex-wrap items-center gap-3">
-            <Magnetic>
-              <a href="#contato" className="btn-diag btn-diag-solid btn-cut">
-                Começar um projeto
-                <ArrowUpRight className="size-4" aria-hidden />
-              </a>
-            </Magnetic>
-            <Magnetic strength={0.18}>
-              <a href="#capacidade" className="btn-diag btn-diag-ghost">
-                O que fazemos
-              </a>
-            </Magnetic>
+            <a href="#contato" className="btn-diag btn-diag-solid btn-cut">
+              Solicitar proposta
+              <ArrowUpRight className="size-4" aria-hidden />
+            </a>
+            <a href="#servicos" className="btn-diag btn-diag-ghost">
+              Ver serviços
+            </a>
           </div>
         </div>
       </div>
-      <a href="#capacidade" className="scroll-cue">
-        <span>Rolar</span>
-        <span className="scroll-cue-line" aria-hidden />
-      </a>
       <div className="hero-cut" aria-hidden />
     </section>
   );
@@ -261,10 +248,14 @@ function Capabilities() {
     <section id="capacidade" className="bg-paper text-ink">
       <div className="site-wrap py-20 md:py-28">
         <Reveal>
-          <p className="kicker text-accent">01 — Capacidade</p>
-          <h2 className="display mt-4 max-w-[16ch] text-[clamp(2.1rem,5vw,4.2rem)]">
-            Dois ofícios, um estúdio.
+          <p className="kicker text-accent">01 — A empresa</p>
+          <h2 className="display mt-4 max-w-[18ch] text-[clamp(2.1rem,5vw,4.2rem)]">
+            Sites e sistemas para o seu negócio.
           </h2>
+          <p className="mt-5 max-w-2xl text-lg text-ink/70">
+            A RR Tech é uma empresa de criação de sites profissionais e sistemas web sob medida. Cada projeto é
+            desenhado para o cliente — não a partir de um modelo pronto.
+          </p>
         </Reveal>
       </div>
       <div className="craft-split">
@@ -273,10 +264,10 @@ function Capabilities() {
             SITES
           </span>
           <p className="font-display text-sm font-bold tracking-[0.2em] uppercase text-accent">01 — Sites</p>
-          <h3 className="display mt-4 text-3xl md:text-5xl">A face do negócio</h3>
+          <h3 className="display mt-4 text-3xl md:text-5xl">Sites que representam a empresa</h3>
           <p className="mt-5 max-w-md text-lg text-ink/75">
-            Páginas com voz própria: composição, tipografia e movimento a serviço da leitura. Um site da RR Tech
-            deve parecer desta empresa — não de qualquer agência.
+            Site institucional, landing page ou redesign: presença digital clara, alinhada à sua marca, pronta para
+            celular e desktop.
           </p>
         </Reveal>
         <Reveal delay={90} className="craft-panel craft-panel-blue">
@@ -284,10 +275,10 @@ function Capabilities() {
             SISTEMAS
           </span>
           <p className="font-display text-sm font-bold tracking-[0.2em] uppercase">02 — Sistemas</p>
-          <h3 className="display mt-4 text-3xl md:text-5xl">A operação no ar</h3>
+          <h3 className="display mt-4 text-3xl md:text-5xl">Sistemas para o dia a dia</h3>
           <p className="mt-5 max-w-md text-lg text-paper/82">
-            Interfaces e fluxos para o dia a dia: clareza, estados honestos e engenharia que aguenta uso real. O
-            sistema resolve; a interface não atrapalha.
+            Sistemas web sob medida: telas, regras e fluxos do seu processo. A operação fica no ar, com interface
+            simples de usar.
           </p>
         </Reveal>
       </div>
@@ -323,60 +314,27 @@ function Services() {
 }
 
 function Process() {
-  const pin = useRef<HTMLElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = pin.current;
-    const tr = track.current;
-    if (!el || !tr) return;
-
-    const update = () => {
-      if (window.innerWidth < 1024) {
-        tr.style.transform = "none";
-        return;
-      }
-      const rect = el.getBoundingClientRect();
-      const total = Math.max(el.offsetHeight - window.innerHeight, 1);
-      const p = Math.min(Math.max(-rect.top / total, 0), 1);
-      const max = Math.max(tr.scrollWidth - window.innerWidth, 0);
-      tr.style.transform = `translate3d(${-p * max}px, 0, 0)`;
-    };
-
-    const lenis = getLenis();
-    lenis?.on("scroll", update);
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    update();
-    return () => {
-      lenis?.off("scroll", update);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
-
   return (
-    <section id="processo" ref={pin} className="process-pin bg-paper text-ink">
-      <div className="process-sticky">
-        <div ref={track} className="process-track">
-          <div className="process-panel process-intro">
-            <p className="kicker">03 — Processo</p>
-            <h2 className="display mt-6 text-[clamp(2.6rem,6vw,5.5rem)]">Do briefing ao ar</h2>
-            <p className="mt-6 max-w-sm text-lg text-paper/80">
-              Um percurso curto e controlado — cada etapa com função, sem teatro de metodologia.
-            </p>
-          </div>
-          {STEPS.map((s) => (
-            <div key={s.n} className="process-panel">
-              <span className="process-num display" aria-hidden>
-                {s.n}
-              </span>
-              <p className="font-display text-xs font-bold tracking-[0.22em] text-accent">{s.n}</p>
-              <h3 className="display mt-4 text-[clamp(2.2rem,4vw,4rem)]">{s.title}</h3>
-              <p className="mt-5 max-w-sm text-lg text-ink/70">{s.text}</p>
-            </div>
+    <section id="processo" className="bg-paper text-ink">
+      <div className="site-wrap py-20 md:py-28">
+        <Reveal>
+          <p className="kicker text-accent">03 — Como trabalhamos</p>
+          <h2 className="display mt-4 max-w-[16ch] text-[clamp(2.1rem,5vw,4rem)]">Do briefing à entrega</h2>
+          <p className="mt-5 max-w-xl text-lg text-ink/70">
+            Um caminho direto, com proposta antes de começar e revisão em cada etapa.
+          </p>
+        </Reveal>
+        <ol className="mt-14 grid gap-px bg-ink/10 md:grid-cols-5">
+          {STEPS.map((s, i) => (
+            <Reveal key={s.n} delay={i * 50}>
+              <li className="bg-paper p-6 md:p-7 md:min-h-[16rem]">
+                <p className="font-display text-xs font-bold tracking-[0.2em] text-accent">{s.n}</p>
+                <h3 className="display mt-4 text-xl md:text-2xl">{s.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink/70">{s.text}</p>
+              </li>
+            </Reveal>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );
@@ -408,70 +366,32 @@ function Work() {
     <section id="projetos" className="bg-ink text-paper">
       <div className="site-wrap py-20 md:py-28">
         <Reveal>
-          <p className="kicker text-accent">04 — Projetos</p>
+          <p className="kicker text-accent">04 — Clientes</p>
           <h2 className="display mt-4 max-w-[16ch] text-[clamp(2.1rem,5vw,4rem)]">
-            Dois clientes já estão com a RR Tech.
+            Dois clientes em andamento.
           </h2>
           <p className="mt-6 max-w-xl text-lg text-paper/70">
-            Os nomes e os cases entram aqui quando puderem ser publicados. Até lá, o que vale é o trabalho em
-            curso — sem depoimento inventado.
+            Os nomes entram no site quando o cliente autorizar a publicação. Enquanto isso, a RR Tech está em
+            operação — sem depoimento inventado.
           </p>
         </Reveal>
-        <div className="tilt-grid mt-12 grid gap-4 md:grid-cols-3">
+        <div className="mt-12 grid gap-4 md:grid-cols-3">
           {items.map((item, i) => (
             <Reveal key={item.n} delay={i * 80}>
-              <TiltCard item={item} />
+              <a href="#contato" className="group block border border-paper/12 bg-ink-2 p-6 md:p-8">
+                <p className="font-display text-xs font-bold tracking-[0.2em] uppercase text-accent">{item.status}</p>
+                <p className="display mt-8 text-2xl">{item.title}</p>
+                <p className="mt-3 text-sm leading-relaxed text-paper/60">{item.note}</p>
+                <p className="mt-8 inline-flex items-center gap-2 font-display text-xs font-bold tracking-[0.16em] uppercase text-paper/50 group-hover:text-accent">
+                  Falar sobre um projeto
+                  <ArrowUpRight className="size-3.5" aria-hidden />
+                </p>
+              </a>
             </Reveal>
           ))}
         </div>
       </div>
     </section>
-  );
-}
-
-function TiltCard({
-  item,
-}: {
-  item: { n: string; title: string; note: string; status: string };
-}) {
-  const ref = useRef<HTMLAnchorElement>(null);
-
-  function onMove(e: ReactPointerEvent<HTMLAnchorElement>) {
-    const el = ref.current;
-    if (!el || window.matchMedia("(pointer: coarse)").matches) return;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `rotateX(${-py * 8}deg) rotateY(${px * 10}deg) translateZ(0)`;
-  }
-
-  function onLeave() {
-    const el = ref.current;
-    if (!el) return;
-    el.style.transform = "rotateX(0) rotateY(0)";
-  }
-
-  return (
-    <a
-      ref={ref}
-      href="#contato"
-      className="cut-frame film-card group relative block min-h-[320px] overflow-hidden border border-paper/12 bg-ink-2 p-6 md:min-h-[380px]"
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
-    >
-      <div className="film-card-inner relative z-[1] flex h-full min-h-[280px] flex-col md:min-h-[340px]">
-        <p className="font-display text-xs font-bold tracking-[0.2em] uppercase text-accent">{item.status}</p>
-        <span className="work-n display" aria-hidden>
-          {item.n}
-        </span>
-        <p className="display mt-16 text-2xl md:mt-24 md:text-3xl">{item.title}</p>
-        <p className="mt-2 max-w-[24ch] text-sm text-paper/60">{item.note}</p>
-        <p className="mt-auto inline-flex items-center gap-2 pt-8 font-display text-xs font-bold tracking-[0.18em] uppercase text-paper/55">
-          Falar do projeto
-          <ArrowUpRight className="size-3.5 text-accent" aria-hidden />
-        </p>
-      </div>
-    </a>
   );
 }
 
@@ -506,10 +426,10 @@ function Contact() {
       <div className="site-wrap relative grid gap-12 py-20 md:grid-cols-12 md:py-28">
         <Reveal className="md:col-span-5">
           <p className="kicker text-accent">05 — Contato</p>
-          <h2 className="display mt-4 text-[clamp(2.2rem,5vw,4.4rem)]">Vamos falar do seu projeto.</h2>
+          <h2 className="display mt-4 text-[clamp(2.2rem,5vw,4.4rem)]">Solicite uma proposta.</h2>
           <p className="mt-6 text-lg text-paper/72">
-            Se você precisa de um site ou de um sistema, este é o começo. Canal oficial de e-mail ou WhatsApp ainda
-            não foi publicado aqui — descreva o que precisa e geramos um briefing para copiar e enviar.
+            Conte o que você precisa. E-mail e WhatsApp oficiais ainda não estão publicados nesta página — o
+            formulário gera um briefing para copiar e enviar pelo canal que vocês já usam.
           </p>
         </Reveal>
         <Reveal delay={80} className="md:col-span-6 md:col-start-7">
@@ -520,7 +440,7 @@ function Contact() {
             </label>
             <label className="grid gap-2 text-sm" htmlFor={`${id}-tipo`}>
               Tipo de trabalho
-              <select id={`${id}-tipo`} name="tipo" className="field bg-ink">
+              <select id={`${id}-tipo`} name="tipo" className="field">
                 <option value="Site institucional">Site institucional</option>
                 <option value="Landing page">Landing page</option>
                 <option value="Interface digital">Interface digital</option>
@@ -538,7 +458,7 @@ function Contact() {
                 {error}
               </p>
             ) : null}
-            <button type="submit" className="btn-diag btn-diag-solid btn-cut justify-self-start">
+            <button type="submit" className="btn-diag btn-diag-ink btn-cut justify-self-start">
               {copied ? (
                 <>
                   Briefing copiado
@@ -560,24 +480,22 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-ink text-paper">
-      <span className="footer-bar" aria-hidden />
-      <div className="site-wrap flex flex-col gap-12 py-16 md:flex-row md:items-end md:justify-between">
+    <footer className="border-t border-paper/10 bg-ink text-paper">
+      <div className="site-wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_auto] md:items-start">
         <div>
           <Logo variant="lockup-dark" />
-          <p className="display mt-8 max-w-[12ch] text-3xl text-paper/90 md:text-4xl">Sites & sistemas.</p>
-          <p className="mt-4 max-w-sm text-sm text-paper/55">
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-paper/60">
             RR Tech — empresa de sites profissionais e sistemas web sob medida.
           </p>
         </div>
-        <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Rodapé">
+        <nav className="flex flex-col gap-2" aria-label="Rodapé">
           {NAV.map((item) => (
-            <a key={item.href} href={item.href} className="nav-link text-paper/55 hover:text-paper">
+            <a key={item.href} href={item.href} className="text-sm text-paper/60 hover:text-paper">
               {item.label}
             </a>
           ))}
         </nav>
-        <p className="text-xs tracking-[0.18em] uppercase text-paper/40">© {new Date().getFullYear()} RR Tech</p>
+        <p className="text-xs tracking-[0.16em] uppercase text-paper/40">© {new Date().getFullYear()} RR Tech</p>
       </div>
     </footer>
   );
