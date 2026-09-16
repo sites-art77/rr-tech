@@ -210,9 +210,6 @@ function Hero({ live, play }: { live: boolean; play: boolean }) {
       )}
     >
       <div className="hero-grid" aria-hidden />
-      <p className="hero-ghost" aria-hidden>
-        MARCAM
-      </p>
       <div className="hero-field-track" aria-hidden>
         <span className="hero-bar hero-bar-1" />
         <span className="hero-bar hero-bar-2" />
@@ -315,28 +312,33 @@ function Approach() {
             Não separamos “bonito” de “funciona”. Cada decisão tem um motivo.
           </p>
         </Reveal>
-        <div className="mt-14 grid gap-px bg-ink/12 md:grid-cols-3">
+        <ol className="mt-16">
           {[
             {
+              n: "01",
               t: "Direção",
               d: "Antes da tela, o problema. Público, oferta e o que precisa acontecer quando a pessoa chega.",
             },
             {
               t: "Forma",
+              n: "02",
               d: "Identidade aplicada de verdade: geometria, tipo, ritmo e estados. Sem estética genérica de tecnologia.",
             },
             {
+              n: "03",
               t: "Construção",
               d: "Front-end cuidadoso: responsivo, teclado, performance e movimento que pertence ao projeto.",
             },
           ].map((item, i) => (
-            <Reveal key={item.t} delay={i * 80} className="studio-card bg-paper p-8 md:p-10">
-              <span className="font-display text-xs font-bold tracking-[0.22em] text-accent">0{i + 1}</span>
-              <h3 className="display mt-4 text-2xl">{item.t}</h3>
-              <p className="mt-3 text-ink/70">{item.d}</p>
+            <Reveal key={item.t} delay={i * 70}>
+              <li className="manifest-row">
+                <span className="manifest-n display">{item.n}</span>
+                <h3 className="display text-[clamp(1.8rem,3vw,2.6rem)]">{item.t}</h3>
+                <p className="max-w-md text-ink/70">{item.d}</p>
+              </li>
             </Reveal>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );
@@ -371,9 +373,9 @@ function Services() {
           {SERVICES.map((s, i) => (
             <li key={s.n}>
               <Reveal delay={i * 40}>
-                <a href="#contato" className="svc-row group grid gap-3 py-8 md:grid-cols-[5rem_1fr_auto_1.15fr] md:items-center md:gap-8">
-                  <span className="font-display text-sm font-bold tracking-[0.18em] text-accent">{s.n}</span>
-                  <h3 className="display text-2xl md:text-[1.85rem]">{s.title}</h3>
+                <a href="#contato" className="svc-row group grid gap-3 py-10 md:grid-cols-[6.5rem_1fr_auto_1.15fr] md:items-center md:gap-8">
+                  <span className="svc-n display">{s.n}</span>
+                  <h3 className="display text-[1.7rem] md:text-[2.15rem]">{s.title}</h3>
                   <ArrowUpRight className="svc-arrow hidden size-5 text-accent md:block" aria-hidden />
                   <p className="text-paper/80 md:text-right">{s.text}</p>
                 </a>
@@ -565,12 +567,15 @@ function TiltCard({
       onPointerLeave={onLeave}
     >
       <div className="film-card-inner relative z-[1] flex h-full min-h-[280px] flex-col md:min-h-[340px]">
-        <p className="font-display text-xs font-bold tracking-[0.2em] uppercase text-paper/45">{item.n}</p>
-        <p className="display mt-20 text-2xl md:mt-28 md:text-3xl">{item.title}</p>
-        <p className="mt-2 max-w-[24ch] text-sm text-paper/55">{item.note}</p>
-        <p className="mt-auto inline-flex items-center gap-2 pt-8 font-display text-xs font-bold tracking-[0.18em] uppercase text-accent">
-          {item.status}
-          <ArrowUpRight className="size-3.5" aria-hidden />
+        <p className="font-display text-xs font-bold tracking-[0.2em] uppercase text-accent">{item.status}</p>
+        <span className="work-n display" aria-hidden>
+          {item.n}
+        </span>
+        <p className="display mt-16 text-2xl md:mt-24 md:text-3xl">{item.title}</p>
+        <p className="mt-2 max-w-[24ch] text-sm text-paper/60">{item.note}</p>
+        <p className="mt-auto inline-flex items-center gap-2 pt-8 font-display text-xs font-bold tracking-[0.18em] uppercase text-paper/55">
+          Falar do projeto
+          <ArrowUpRight className="size-3.5 text-accent" aria-hidden />
         </p>
       </div>
     </a>
@@ -615,7 +620,7 @@ function Contact() {
           </p>
         </Reveal>
         <Reveal delay={80} className="md:col-span-6 md:col-start-7">
-          <form onSubmit={onSubmit} className="cut-frame form-panel grid gap-4 p-6 md:p-8" noValidate>
+          <form onSubmit={onSubmit} className="cut-frame form-panel form-paper grid gap-4 p-6 md:p-8" noValidate>
             <label className="grid gap-2 text-sm" htmlFor={`${id}-nome`}>
               Nome
               <input id={`${id}-nome`} name="nome" className="field" autoComplete="name" required />
@@ -662,10 +667,12 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="border-t border-paper/10 bg-ink text-paper">
-      <div className="site-wrap flex flex-col gap-10 py-12 md:flex-row md:items-end md:justify-between">
+    <footer className="relative overflow-hidden bg-ink text-paper">
+      <span className="footer-bar" aria-hidden />
+      <div className="site-wrap flex flex-col gap-12 py-16 md:flex-row md:items-end md:justify-between">
         <div>
           <Logo variant="lockup-dark" />
+          <p className="display mt-8 max-w-[12ch] text-3xl text-paper/90 md:text-4xl">Sites & sistemas.</p>
           <p className="mt-4 max-w-sm text-sm text-paper/55">
             RR Tech — empresa de sites profissionais e sistemas web sob medida.
           </p>

@@ -716,6 +716,7 @@ html[data-motion="on"] .site-header {
 .film-card {
   transform-style: preserve-3d;
   transition: transform 480ms cubic-bezier(0.16, 0.84, 0.32, 1);
+  border-left: 3px solid var(--color-accent);
 }
 
 .magnetic {
@@ -725,7 +726,7 @@ html[data-motion="on"] .site-header {
 
 .contact-plane {
   clip-path: polygon(0 0, 48% 0, 22% 100%, 0 100%);
-  opacity: 0.42;
+  opacity: 0.28;
   transform: translate3d(calc(var(--progress) * -4%), calc(var(--progress) * -30px), 0);
   will-change: transform;
 }
@@ -1018,9 +1019,77 @@ html[data-motion="on"] .site-header {
   }
 }
 
-.form-panel {
-  background: color-mix(in srgb, var(--color-paper) 4%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-paper) 14%, transparent);
+.manifest-row {
+  display: grid;
+  gap: 0.75rem 2rem;
+  padding: 1.8rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
+  align-items: baseline;
+}
+
+@media (min-width: 768px) {
+  .manifest-row {
+    grid-template-columns: 5.5rem 1fr 1.2fr;
+    padding: 2.4rem 0;
+  }
+}
+
+.manifest-n {
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  letter-spacing: -0.06em;
+  color: var(--color-accent);
+  line-height: 0.9;
+}
+
+.svc-n {
+  font-size: 1.85rem;
+  letter-spacing: -0.05em;
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.work-n {
+  position: absolute;
+  right: 0.4rem;
+  bottom: -0.18em;
+  font-size: clamp(5rem, 8vw, 7.5rem);
+  letter-spacing: -0.08em;
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--color-paper) 14%, transparent);
+  pointer-events: none;
+}
+
+.form-paper {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border: 0;
+}
+
+.form-paper .field {
+  background: #fff;
+  color: var(--color-ink);
+  border-color: color-mix(in srgb, var(--color-ink) 16%, transparent);
+}
+
+.form-paper .field:focus {
+  border-color: var(--color-accent);
+}
+
+.form-paper select.field {
+  background: #fff;
+}
+
+.footer-bar {
+  position: absolute;
+  left: 12%;
+  top: -18%;
+  height: 140%;
+  width: 56px;
+  background: var(--color-accent);
+  transform: skewX(-28deg);
+  pointer-events: none;
+  opacity: 0.95;
 }
 
 .film-grain {
