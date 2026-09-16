@@ -18,37 +18,37 @@ const NAV = [
 const SERVICES = [
   {
     n: "01",
-    title: "Sites institucionais",
-    text: "Presença digital clara, com hierarquia, ritmo e conteúdo verdadeiro — feita para representar o negócio, não um template.",
+    title: "Site institucional",
+    text: "O site da empresa: quem vocês são, o que fazem e como entrar em contato — claro no celular e no computador.",
   },
   {
     n: "02",
-    title: "Landing pages",
-    text: "Páginas de campanha com uma ação principal, leitura rápida e composição que conduz a decisão.",
+    title: "Landing page",
+    text: "Página de campanha com uma oferta e um pedido. Feita para converter, não para contar a história toda.",
   },
   {
     n: "03",
-    title: "Interfaces digitais",
-    text: "UI para produtos e fluxos reais: estados, formulários, navegação e consistência em desktop e mobile.",
+    title: "Interface digital",
+    text: "Telas de produto ou operação: formulários, estados, navegação e consistência em todo o fluxo.",
   },
   {
     n: "04",
-    title: "Sistemas web sob medida",
-    text: "Aplicações construídas em torno do processo da empresa — telas, regras e operação no mesmo desenho.",
+    title: "Sistema web sob medida",
+    text: "Sistema no processo da empresa: cadastros, regras, painel e o dia a dia no ar — sem ferramenta genérica.",
   },
   {
     n: "05",
-    title: "Redesign de experiências",
-    text: "Modernização de sites e interfaces existentes: o que funciona permanece; o que atrapalha é redesenhado.",
+    title: "Redesign",
+    text: "O site ou o sistema que vocês já têm, reorganizado: o que funciona fica; o que atrapalha é redesenhado.",
   },
 ];
 
 const STEPS = [
-  { n: "01", title: "Briefing", text: "Conversa para entender o negócio, o prazo e o que o site ou o sistema precisa resolver." },
-  { n: "02", title: "Proposta", text: "Escopo, prazo e investimento — por escrito, antes de começar." },
-  { n: "03", title: "Design", text: "Estrutura e visual alinhados à sua marca. Você revisa antes da construção." },
-  { n: "04", title: "Desenvolvimento", text: "Implementação do site ou do sistema, testada em desktop e celular." },
-  { n: "05", title: "Entrega", text: "Publicação e o necessário para você operar o projeto no dia a dia." },
+  { n: "01", title: "Briefing", text: "Reunião para entender o negócio, o prazo e o que precisa existir no ar." },
+  { n: "02", title: "Proposta", text: "Escopo, prazo e investimento por escrito — antes de qualquer desenvolvimento." },
+  { n: "03", title: "Design", text: "Estrutura e visual da sua marca. Você aprova antes da construção." },
+  { n: "04", title: "Desenvolvimento", text: "Site ou sistema implementado e testado em desktop e celular." },
+  { n: "05", title: "Entrega", text: "Publicação, acessos e o necessário para vocês operarem o projeto." },
 ];
 
 export function Home() {
@@ -63,7 +63,7 @@ export function Home() {
     const raf = requestAnimationFrame(() => {
       requestAnimationFrame(() => setPlay(true));
     });
-    const t = window.setTimeout(() => setIntroDone(true), 1700);
+    const t = window.setTimeout(() => setIntroDone(true), 1600);
     return () => {
       cancelAnimationFrame(raf);
       window.clearTimeout(t);
@@ -71,7 +71,7 @@ export function Home() {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -209,10 +209,10 @@ function Hero({ live, play }: { live: boolean; play: boolean }) {
         <span className="hero-bar hero-bar-3" />
       </div>
 
-      <div className="hero-copy-track site-wrap relative z-10 grid min-h-[calc(100svh-6rem)] items-center pb-16 md:pb-24">
-        <div className="hero-copy">
+      <div className="hero-copy-track site-wrap relative z-10 grid min-h-[calc(100svh-6rem)] items-center pb-20 md:grid-cols-12 md:pb-24">
+        <div className="hero-copy md:col-span-8">
           <p className="hero-kicker kicker">
-            <span className="text-accent">01</span>
+            <span className="text-accent">RR Tech</span>
             <span className="mx-3 inline-block h-px w-8 bg-accent align-middle" />
             Sites & sistemas
           </p>
@@ -224,8 +224,9 @@ function Hero({ live, play }: { live: boolean; play: boolean }) {
               <span>Sistemas que resolvem.</span>
             </span>
           </h1>
-          <p className="hero-lede mt-7 max-w-[36rem] text-[1.125rem] leading-relaxed text-paper/88 md:text-xl">
-            Empresa de criação de sites profissionais e sistemas web sob medida. Dois clientes em andamento.
+          <p className="hero-lede mt-7 max-w-[34rem] text-[1.125rem] leading-relaxed text-paper/88 md:text-xl">
+            Criamos o site da sua empresa e o sistema que ela usa no dia a dia — sob medida, com proposta antes de
+            começar.
           </p>
           <div className="hero-actions mt-9 flex flex-wrap items-center gap-3">
             <a href="#contato" className="btn-diag btn-diag-solid btn-cut">
@@ -237,6 +238,20 @@ function Hero({ live, play }: { live: boolean; play: boolean }) {
             </a>
           </div>
         </div>
+        <dl className="hero-facts mt-14 grid gap-6 md:col-span-4 md:mt-24 md:justify-self-end">
+          <div>
+            <dt className="kicker text-accent">Clientes</dt>
+            <dd className="display mt-2 text-3xl">2 em curso</dd>
+          </div>
+          <div>
+            <dt className="kicker text-paper/45">Trabalho</dt>
+            <dd className="mt-2 text-paper/80">Sites e sistemas web sob medida</dd>
+          </div>
+          <div>
+            <dt className="kicker text-paper/45">Início</dt>
+            <dd className="mt-2 text-paper/80">Proposta por escrito, antes do desenvolvimento</dd>
+          </div>
+        </dl>
       </div>
       <div className="hero-cut" aria-hidden />
     </section>
@@ -250,11 +265,11 @@ function Capabilities() {
         <Reveal>
           <p className="kicker text-accent">01 — A empresa</p>
           <h2 className="display mt-4 max-w-[18ch] text-[clamp(2.1rem,5vw,4.2rem)]">
-            Sites e sistemas para o seu negócio.
+            Uma empresa de sites e sistemas.
           </h2>
           <p className="mt-5 max-w-2xl text-lg text-ink/70">
-            A RR Tech é uma empresa de criação de sites profissionais e sistemas web sob medida. Cada projeto é
-            desenhado para o cliente — não a partir de um modelo pronto.
+            A RR Tech constrói presença digital e ferramentas de operação. Cada projeto é do cliente — não um
+            modelo pronto com o logo trocado.
           </p>
         </Reveal>
       </div>
@@ -264,22 +279,30 @@ function Capabilities() {
             SITES
           </span>
           <p className="font-display text-sm font-bold tracking-[0.2em] uppercase text-accent">01 — Sites</p>
-          <h3 className="display mt-4 text-3xl md:text-5xl">Sites que representam a empresa</h3>
+          <h3 className="display mt-4 text-3xl md:text-5xl">A cara da empresa na internet</h3>
           <p className="mt-5 max-w-md text-lg text-ink/75">
-            Site institucional, landing page ou redesign: presença digital clara, alinhada à sua marca, pronta para
-            celular e desktop.
+            Institucional, landing ou redesign. A marca aplicada de verdade, leitura fácil, pronto para celular.
           </p>
+          <ul className="craft-list">
+            <li>Quem vocês são e o que fazem, sem texto genérico</li>
+            <li>Uma ação clara: contato, proposta ou venda</li>
+            <li>Publicação e o site no ar</li>
+          </ul>
         </Reveal>
         <Reveal delay={90} className="craft-panel craft-panel-blue">
           <span className="craft-bg" aria-hidden>
             SISTEMAS
           </span>
           <p className="font-display text-sm font-bold tracking-[0.2em] uppercase">02 — Sistemas</p>
-          <h3 className="display mt-4 text-3xl md:text-5xl">Sistemas para o dia a dia</h3>
+          <h3 className="display mt-4 text-3xl md:text-5xl">A operação no computador</h3>
           <p className="mt-5 max-w-md text-lg text-paper/82">
-            Sistemas web sob medida: telas, regras e fluxos do seu processo. A operação fica no ar, com interface
-            simples de usar.
+            Sistema web no processo de vocês: cadastros, regras, painel e o que a equipe usa todo dia.
           </p>
+          <ul className="craft-list craft-list-light">
+            <li>Fluxo desenhado com quem vai usar</li>
+            <li>Telas simples, regras da empresa</li>
+            <li>Acesso controlado e entrega estável</li>
+          </ul>
         </Reveal>
       </div>
     </section>
@@ -292,17 +315,21 @@ function Services() {
       <div className="site-wrap py-20 md:py-28">
         <Reveal>
           <p className="kicker text-accent">02 — Serviços</p>
-          <h2 className="display mt-4 max-w-[14ch] text-[clamp(2.1rem,5vw,4rem)]">O que construímos</h2>
+          <h2 className="display mt-4 max-w-[16ch] text-[clamp(2.1rem,5vw,4rem)]">O que a RR Tech entrega</h2>
+          <p className="mt-5 max-w-xl text-lg text-paper/70">Cinco tipos de trabalho. Um pedido, uma proposta.</p>
         </Reveal>
         <ul className="mt-12 border-y border-paper/12">
           {SERVICES.map((s, i) => (
             <li key={s.n}>
               <Reveal delay={i * 40}>
-                <a href="#contato" className="svc-row group grid gap-3 py-10 md:grid-cols-[6.5rem_1fr_auto_1.15fr] md:items-center md:gap-8">
+                <a
+                  href="#contato"
+                  className="svc-row group grid gap-3 py-8 md:grid-cols-[4.5rem_minmax(0,18rem)_1fr_auto] md:items-center md:gap-8 md:py-9"
+                >
                   <span className="svc-n display">{s.n}</span>
-                  <h3 className="display text-[1.7rem] md:text-[2.15rem]">{s.title}</h3>
+                  <h3 className="display text-[1.45rem] md:text-[1.7rem]">{s.title}</h3>
+                  <p className="text-[0.98rem] leading-relaxed text-paper/72">{s.text}</p>
                   <ArrowUpRight className="svc-arrow hidden size-5 text-accent md:block" aria-hidden />
-                  <p className="text-paper/80 md:text-right">{s.text}</p>
                 </a>
               </Reveal>
             </li>
@@ -321,15 +348,15 @@ function Process() {
           <p className="kicker text-accent">03 — Como trabalhamos</p>
           <h2 className="display mt-4 max-w-[16ch] text-[clamp(2.1rem,5vw,4rem)]">Do briefing à entrega</h2>
           <p className="mt-5 max-w-xl text-lg text-ink/70">
-            Um caminho direto, com proposta antes de começar e revisão em cada etapa.
+            Vocês sabem o preço e o prazo antes de começar. Cada etapa tem revisão.
           </p>
         </Reveal>
-        <ol className="mt-14 grid gap-px bg-ink/10 md:grid-cols-5">
+        <ol className="step-grid mt-14">
           {STEPS.map((s, i) => (
             <Reveal key={s.n} delay={i * 50}>
-              <li className="bg-paper p-6 md:p-7 md:min-h-[16rem]">
-                <p className="font-display text-xs font-bold tracking-[0.2em] text-accent">{s.n}</p>
-                <h3 className="display mt-4 text-xl md:text-2xl">{s.title}</h3>
+              <li className="step-card">
+                <p className="step-index display">{s.n}</p>
+                <h3 className="display mt-5 text-xl md:text-2xl">{s.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-ink/70">{s.text}</p>
               </li>
             </Reveal>
@@ -342,24 +369,9 @@ function Process() {
 
 function Work() {
   const items = [
-    {
-      n: "01",
-      title: "Cliente 01",
-      note: "Projeto em andamento. O case completo entra quando puder ser publicado.",
-      status: "Em andamento",
-    },
-    {
-      n: "02",
-      title: "Cliente 02",
-      note: "Projeto em andamento. O case completo entra quando puder ser publicado.",
-      status: "Em andamento",
-    },
-    {
-      n: "03",
-      title: "Próximo projeto",
-      note: "Aberto para o próximo site ou sistema da RR Tech.",
-      status: "Disponível",
-    },
+    { n: "01", title: "Cliente 01", note: "Projeto em andamento.", status: "Em curso" },
+    { n: "02", title: "Cliente 02", note: "Projeto em andamento.", status: "Em curso" },
+    { n: "03", title: "Próximo projeto", note: "Aberto para site ou sistema.", status: "Disponível" },
   ];
 
   return (
@@ -367,23 +379,25 @@ function Work() {
       <div className="site-wrap py-20 md:py-28">
         <Reveal>
           <p className="kicker text-accent">04 — Clientes</p>
-          <h2 className="display mt-4 max-w-[16ch] text-[clamp(2.1rem,5vw,4rem)]">
-            Dois clientes em andamento.
-          </h2>
+          <h2 className="display mt-4 max-w-[16ch] text-[clamp(2.1rem,5vw,4rem)]">Dois clientes em curso.</h2>
           <p className="mt-6 max-w-xl text-lg text-paper/70">
-            Os nomes entram no site quando o cliente autorizar a publicação. Enquanto isso, a RR Tech está em
-            operação — sem depoimento inventado.
+            Nomes e cases entram no ar com autorização. A empresa já está operando — sem depoimento inventado.
           </p>
         </Reveal>
-        <div className="mt-12 grid gap-4 md:grid-cols-3">
+        <div className="mt-12 grid gap-px bg-paper/12 md:grid-cols-3">
           {items.map((item, i) => (
-            <Reveal key={item.n} delay={i * 80}>
-              <a href="#contato" className="group block border border-paper/12 bg-ink-2 p-6 md:p-8">
-                <p className="font-display text-xs font-bold tracking-[0.2em] uppercase text-accent">{item.status}</p>
-                <p className="display mt-8 text-2xl">{item.title}</p>
-                <p className="mt-3 text-sm leading-relaxed text-paper/60">{item.note}</p>
-                <p className="mt-8 inline-flex items-center gap-2 font-display text-xs font-bold tracking-[0.16em] uppercase text-paper/50 group-hover:text-accent">
-                  Falar sobre um projeto
+            <Reveal key={item.n} delay={i * 70}>
+              <a href="#contato" className="client-card group">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-display text-xs font-bold tracking-[0.2em] uppercase text-accent">
+                    {item.status}
+                  </span>
+                  <span className="text-paper/35">{item.n}</span>
+                </div>
+                <p className="display mt-10 text-2xl md:text-3xl">{item.title}</p>
+                <p className="mt-3 text-sm text-paper/55">{item.note}</p>
+                <p className="mt-10 inline-flex items-center gap-2 font-display text-xs font-bold tracking-[0.16em] uppercase text-paper/45 group-hover:text-accent">
+                  Solicitar proposta
                   <ArrowUpRight className="size-3.5" aria-hidden />
                 </p>
               </a>
@@ -404,6 +418,8 @@ function Contact() {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const nome = String(data.get("nome") ?? "").trim();
+    const empresa = String(data.get("empresa") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
     const tipo = String(data.get("tipo") ?? "").trim();
     const mensagem = String(data.get("mensagem") ?? "").trim();
     if (!nome || !mensagem) {
@@ -411,8 +427,16 @@ function Contact() {
       return;
     }
     setError("");
-    const brief = ["Briefing RR Tech", `Nome: ${nome}`, tipo ? `Tipo: ${tipo}` : "", "", mensagem]
-      .filter(Boolean)
+    const brief = [
+      "Proposta — RR Tech",
+      `Nome: ${nome}`,
+      empresa ? `Empresa: ${empresa}` : "",
+      email ? `E-mail: ${email}` : "",
+      tipo ? `Tipo: ${tipo}` : "",
+      "",
+      mensagem,
+    ]
+      .filter((line, i, arr) => line !== "" || arr[i - 1] !== "")
       .join("\n");
     void navigator.clipboard.writeText(brief).then(() => {
       setCopied(true);
@@ -422,21 +446,32 @@ function Contact() {
 
   return (
     <section id="contato" className="relative overflow-hidden bg-ink text-paper">
-      <div aria-hidden className="contact-plane pointer-events-none absolute bottom-0 left-0 h-full w-[42%] bg-accent" />
+      <div aria-hidden className="contact-plane pointer-events-none absolute bottom-0 left-0 h-full w-[38%] bg-accent" />
       <div className="site-wrap relative grid gap-12 py-20 md:grid-cols-12 md:py-28">
         <Reveal className="md:col-span-5">
           <p className="kicker text-accent">05 — Contato</p>
-          <h2 className="display mt-4 text-[clamp(2.2rem,5vw,4.4rem)]">Solicite uma proposta.</h2>
-          <p className="mt-6 text-lg text-paper/72">
-            Conte o que você precisa. E-mail e WhatsApp oficiais ainda não estão publicados nesta página — o
-            formulário gera um briefing para copiar e enviar pelo canal que vocês já usam.
+          <h2 className="display mt-4 text-[clamp(2.2rem,5vw,4.2rem)]">Peça uma proposta.</h2>
+          <p className="mt-6 text-lg text-paper/75">
+            Descreva o site ou o sistema. O formulário monta um briefing para você copiar e enviar — e-mail e
+            WhatsApp oficiais ainda não estão nesta página.
           </p>
+          <p className="mt-6 text-sm text-paper/50">Resposta comercial a partir do briefing. Sem compromisso automático.</p>
         </Reveal>
         <Reveal delay={80} className="md:col-span-6 md:col-start-7">
           <form onSubmit={onSubmit} className="cut-frame form-panel form-paper grid gap-4 p-6 md:p-8" noValidate>
-            <label className="grid gap-2 text-sm" htmlFor={`${id}-nome`}>
-              Nome
-              <input id={`${id}-nome`} name="nome" className="field" autoComplete="name" required />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="grid gap-2 text-sm" htmlFor={`${id}-nome`}>
+                Nome
+                <input id={`${id}-nome`} name="nome" className="field" autoComplete="name" required />
+              </label>
+              <label className="grid gap-2 text-sm" htmlFor={`${id}-empresa`}>
+                Empresa
+                <input id={`${id}-empresa`} name="empresa" className="field" autoComplete="organization" />
+              </label>
+            </div>
+            <label className="grid gap-2 text-sm" htmlFor={`${id}-email`}>
+              E-mail
+              <input id={`${id}-email`} name="email" type="email" className="field" autoComplete="email" />
             </label>
             <label className="grid gap-2 text-sm" htmlFor={`${id}-tipo`}>
               Tipo de trabalho
@@ -450,7 +485,7 @@ function Contact() {
               </select>
             </label>
             <label className="grid gap-2 text-sm" htmlFor={`${id}-msg`}>
-              Sobre o projeto
+              O que vocês precisam
               <textarea id={`${id}-msg`} name="mensagem" className="field min-h-32" required />
             </label>
             {error ? (
@@ -481,21 +516,33 @@ function Contact() {
 function Footer() {
   return (
     <footer className="border-t border-paper/10 bg-ink text-paper">
-      <div className="site-wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_auto] md:items-start">
+      <div className="site-wrap grid gap-10 py-14 md:grid-cols-3">
         <div>
           <Logo variant="lockup-dark" />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-paper/60">
             RR Tech — empresa de sites profissionais e sistemas web sob medida.
           </p>
         </div>
-        <nav className="flex flex-col gap-2" aria-label="Rodapé">
-          {NAV.map((item) => (
-            <a key={item.href} href={item.href} className="text-sm text-paper/60 hover:text-paper">
-              {item.label}
-            </a>
-          ))}
-        </nav>
-        <p className="text-xs tracking-[0.16em] uppercase text-paper/40">© {new Date().getFullYear()} RR Tech</p>
+        <div>
+          <p className="kicker text-paper/40">Serviços</p>
+          <ul className="mt-4 grid gap-2 text-sm text-paper/65">
+            <li>Site institucional</li>
+            <li>Landing page</li>
+            <li>Sistema web sob medida</li>
+            <li>Redesign</li>
+          </ul>
+        </div>
+        <div className="md:text-right">
+          <p className="kicker text-paper/40">Navegação</p>
+          <nav className="mt-4 flex flex-col gap-2 md:items-end" aria-label="Rodapé">
+            {NAV.map((item) => (
+              <a key={item.href} href={item.href} className="text-sm text-paper/65 hover:text-paper">
+                {item.label}
+              </a>
+            ))}
+          </nav>
+          <p className="mt-8 text-xs tracking-[0.16em] uppercase text-paper/35">© {new Date().getFullYear()} RR Tech</p>
+        </div>
       </div>
     </footer>
   );
